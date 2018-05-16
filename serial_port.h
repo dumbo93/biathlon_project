@@ -7,7 +7,7 @@ int serial_init( void );
 
 void serial_close( void );
 
-char serial_read( void );
+void serial_read( void );
 
 //void serial_write( void );
 

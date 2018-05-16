@@ -104,14 +104,14 @@ void serial_close( void )
 }
 
 
-char serial_read( void )
+void serial_read( void )
 {
-	if (read(fd, &received_val,1) > 0)
+	if (read(fd, &current_value,1) > 0)
 	{
-		printf("Read value %s\n", received_val);
+		printf("Read value %s\n", &current_value);
 		central_state_set( got_value );
 	}
-	return received_val;
+	//return *received_val;
 }
 
 /*

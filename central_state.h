@@ -3,6 +3,7 @@
 
 typedef enum{read_serial, got_value} state_t;
 
+char current_value;
 
 void central_state_set(state_t next_state);
 
