@@ -1,7 +1,7 @@
 
 // file for saving data values
 #include <stdio.h>
-#include <string.h>
+//#include <string.h>
 #include <stdlib.h>
 #include <time.h>
 
@@ -12,7 +12,7 @@
 char save_data_name[32] = "logfile_";
 FILE *fp;
 
-void init_make_file(struct tm stime){
+void init_create_file(struct tm stime){
 	stime.tm_mon = stime.tm_mon + 1;
 	stime.tm_year = stime.tm_year - 100;
 	

@@ -8,25 +8,26 @@
 #include <stdio.h>
 #include <string.h>
 #include <sys/socket.h> 
-
 #include <unistd.h>
+
 #include "wifi_client.h"
+#include "central_state.h"
+
 
 int WIFI_init( int socket_desc )
 {
 	printf("Hello from wifi_init\n");
     int sendt_data, received_data;
-    socket_desc = WIFI_create_socket();
+    socket_desc = WIFI_create_socket(socket_desc);
     WIFI_get_connection( socket_desc );
     //sendt_data = WIFI_send_data( socket_desc, message);
     //received_data = WIFI_receive_data( socket_desc );
     //WIFI_close_socket( socket_desc );
-    return 1;
+    return socket_desc;
 }
 
-int WIFI_create_socket( void )
+int WIFI_create_socket( int socket_desc )
 {
-    int socket_desc;
 	socket_desc = socket(AF_INET , SOCK_STREAM , 0);
     
     if (socket_desc == -1)
@@ -61,17 +62,17 @@ void WIFI_get_connection( int socket_desc )
 }
 
 
-int WIFI_send_data( int socket_desc, char *message)
+int WIFI_send_data( int socket_desc )
 {
-	message = "Hello from client\r\n\r\n";
-    if( send(socket_desc , message , strlen(message) , 0) < 0)
+    if( send(socket_desc , &current_value , strlen(&current_value) , 0) < 0)
     {
         printf("Send failed\n");
         return 1;
     }
-    printf("Data Send\n");
+    printf("Data Sendt %s \n", &current_value);
     return 0;
 }
+
 
 int WIFI_receive_data( int socket_desc )
 {
