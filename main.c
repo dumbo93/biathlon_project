@@ -26,7 +26,7 @@ int main( int argc, char *argv[] ){
 	}
 	init_create_file(stime);
 	serial_init();
-	//socket_desc = WIFI_init(socket_desc);
+	socket_desc = WIFI_init(socket_desc);
 	
 	printf("main: %d\n", socket_desc);
 	while(1)
@@ -38,7 +38,7 @@ int main( int argc, char *argv[] ){
 				
 			case got_value:
 				save_data_val( );
-				//WIFI_send_data( socket_desc );
+				WIFI_send_data( socket_desc );
 				central_state_set( read_serial );
 				break;
 			default:
@@ -48,7 +48,7 @@ int main( int argc, char *argv[] ){
 	}
 	
 	printf("Closing socket and serial port\n");
-	//WIFI_close_socket( socket_desc );
+	WIFI_close_socket( socket_desc );
 	serial_close();
 
 	return 0;

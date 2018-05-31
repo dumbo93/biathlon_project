@@ -29,18 +29,21 @@ void init_create_file(struct tm stime){
 	
 	fp = fopen(save_data_name, "w");
 
-	fprintf(fp, "sensor_name");
-	fprintf(fp, "--");
-	fprintf(fp, "sensor_time");
+	fprintf(fp, "Logging starter at time: ");
+	fprintf(fp, "%d:%d", stime.tm_hour, stime.tm_min);
 	fprintf(fp, "\n\n");
 
 	fclose(fp);
 }
 
-void file_name_set(int name_char)
+void file_name_set(int time_value)
 {
+	if (time_value < 10)
+	{
+		strcat(save_data_name, "0");
+	}
 	char add_int[4];
-	sprintf(add_int, "%d", name_char);
+	sprintf(add_int, "%d", time_value);
 	strcat(save_data_name, add_int);
 }
 
@@ -50,8 +53,6 @@ void save_data_val( void)
 {
 	fp = fopen(save_data_name, "a");
 
-	fprintf(fp, "test");
-	fprintf(fp, "--");
 	fprintf(fp, "%s", &current_value_hex);
 	fprintf(fp, "\n");
 
