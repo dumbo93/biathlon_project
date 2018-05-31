@@ -77,25 +77,6 @@ int serial_init( void )
 	return fd;
 }
 
-/*
-int serial_open( int fd )
-{
-	fd = open("/dev/ttyACM0", O_RDWR | O_NOCTTY | O_NDELAY);
-	// ttyUSB0: FT232 based USB2SERIAL converter
-	// 0_RDWR:  Read/Write access to serial port
-	// 0_NOCTTY: No terminal will control the process
-	
-	// error checking
-	if(fd < 0)
-		printf("\n ERROR! in opening ttyACM0\n");
-// 	/else
-// 	{
-// 		//printf("\n ttyACM0 Opened successfully\n");
-// 		printf("opend port open");
-// 	}
-	return fd;
-}
-*/
 
 void serial_close( void )
 {
@@ -108,15 +89,11 @@ void serial_read( void )
 {
 	if (read(fd, &current_value,1) > 0)
 	{
-		printf("Read value %s\n", &current_value);
+		get_hex_val();
+		printf("Read value %s\n", &current_value_hex);
 		central_state_set( got_value );
 	}
-	//return *received_val;
 }
 
-/*
-void serial_write( void )
-{
-	//write(fd, buffer, len);
-}
-*/
+
+

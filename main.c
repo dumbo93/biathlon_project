@@ -24,14 +24,11 @@ int main( int argc, char *argv[] ){
 		printf("failed to obtain the current time.\n");
 		return 0;
 	}
-	serial_init();
 	init_create_file(stime);
-	socket_desc = WIFI_init(socket_desc);
+	serial_init();
+	//socket_desc = WIFI_init(socket_desc);
 	
 	printf("main: %d\n", socket_desc);
-	
-	central_state_set( read_serial );
-	
 	while(1)
 	{
 		switch( central_state_get() ){
@@ -40,9 +37,8 @@ int main( int argc, char *argv[] ){
 				break;
 				
 			case got_value:
-				//save_data_val( );
-				printf("main: got value \n");
-				WIFI_send_data( socket_desc );
+				save_data_val( );
+				//WIFI_send_data( socket_desc );
 				central_state_set( read_serial );
 				break;
 			default:
@@ -52,8 +48,8 @@ int main( int argc, char *argv[] ){
 	}
 	
 	printf("Closing socket and serial port\n");
-	WIFI_close_socket( socket_desc );
-	//serial_close();
+	//WIFI_close_socket( socket_desc );
+	serial_close();
 
 	return 0;
 }

@@ -48,12 +48,11 @@ void file_name_set(int name_char)
 //called when data is resived
 void save_data_val( void)
 {
-	printf("save data %s\n", &current_value);
 	fp = fopen(save_data_name, "a");
 
 	fprintf(fp, "test");
 	fprintf(fp, "--");
-	fprintf(fp, "%s", &current_value);
+	fprintf(fp, "%s", &current_value_hex);
 	fprintf(fp, "\n");
 
 	fclose(fp);
