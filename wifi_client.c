@@ -64,12 +64,12 @@ void WIFI_get_connection( int socket_desc )
 
 int WIFI_send_data( int socket_desc )
 {
-    if( send(socket_desc , &current_value , strlen(&current_value) , 0) < 0)
+    if( send(socket_desc , &current_value_hex , strlen(&current_value_hex) , 0) < 0)
     {
         printf("Send failed\n");
         return 1;
     }
-    printf("Data Sendt %s \n", &current_value);
+    printf("Data Sendt %s \n", &current_value_hex);
     return 0;
 }
 
