@@ -39,7 +39,7 @@ int main( int argc, char *argv[] ){
 			case got_value:
 				save_data_val( );
 				if (connected){
-					WIFI_send_data( socket_desc );
+					WIFI_send_data( );
 				}
 				central_state_set( read_serial );
 				break;
