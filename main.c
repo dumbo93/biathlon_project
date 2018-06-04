@@ -13,7 +13,7 @@
 int main( int argc, char *argv[] ){
 	
 	printf("Hello from main\n");
-	int socket_desc;
+	int connected;
 	time_t current_time;
 	
 	current_time = time(NULL);
@@ -26,7 +26,7 @@ int main( int argc, char *argv[] ){
 	}
 	init_create_file(stime);
 	serial_init();
-	socket_desc = WIFI_init(socket_desc);
+	connected = WIFI_init();
 	
 	printf("main: %d\n", socket_desc);
 	while(1)
@@ -38,7 +38,9 @@ int main( int argc, char *argv[] ){
 				
 			case got_value:
 				save_data_val( );
-				WIFI_send_data( socket_desc );
+				if (connected){
+					WIFI_send_data( socket_desc );
+				}
 				central_state_set( read_serial );
 				break;
 			default:
