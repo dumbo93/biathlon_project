@@ -28,11 +28,11 @@ int WIFI_init( int socket_desc )
     	if (connect(socket_desc , (struct sockaddr *)&server , sizeof(server)) < 0)
    	{
         	printf("connect error\n");
+		return 0;
     	}
      
     	printf("Connected\n");
-
-    	return socket_desc;
+    	return 1;
 }
 
 
