@@ -9,6 +9,7 @@
 
 #include "serial_port.h"
 #include "central_state.h"
+#include "sensor_id.h"
 
 
 
@@ -85,15 +86,35 @@ void serial_close( void )
 }
 
 
-void serial_read( void )
+int serial_read( void )
 {
 	if (read(fd, &current_value,1) > 0)
 	{
-		get_hex_val();
-		printf("Read value %s\n", &current_value_hex);
-		central_state_set( got_value );
+		ascii_to_hex();
+		ascii_to_int();
+		printf("Read value %s\n", &current_value);
+		return 1;
 	}
+	return 0;
 }
 
-
+void serial_new_data( void )
+{
+	switch (current_value_int){
+		case HRM_SENSOR:
+			printf("New data: HRM %d\n", current_value_int);
+			central_state_set(hrm_data_received);
+			break;
+		
+		case PHY5_SENSOR:
+			printf("New data: PHY5 %d\n", current_value_int);
+			central_state_set(phy5_data_received);
+			break;
+			
+		default:
+			printf("New data: error %d\n", current_value_int);
+			central_state_set(wait_for_data);
+			break;
+	}
+}
 

@@ -2,11 +2,13 @@
 // file for saving data values
 #include <stdio.h>
 //#include <string.h>
+#include <string.h>
 #include <stdlib.h>
 #include <time.h>
 
 #include "save_data.h"
 #include "central_state.h"
+
 
 
 char save_data_name[32] = "logfile_";
@@ -53,11 +55,17 @@ void save_data_val( void)
 {
 	fp = fopen(save_data_name, "a");
 
-	fprintf(fp, "%s", &current_value_hex);
-	fprintf(fp, "\n");
+	fprintf(fp, "%d", current_value_int);
 
 	fclose(fp);
 }
 
+void save_data_end( void)
+{
+	fp = fopen(save_data_name, "a");
 
+	fprintf(fp, "\n");
+
+	fclose(fp);
+}
 

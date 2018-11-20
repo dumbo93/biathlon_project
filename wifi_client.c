@@ -20,8 +20,8 @@ int WIFI_init( void )
     	}
 	
 	
-	server.sin_addr.s_addr = inet_addr("129.241.154.24");
-    	// IP for PC used: 129.241.154.24
+	server.sin_addr.s_addr = inet_addr("129.241.154.22");
+    	// IP for PC used: 129.241.154.22
 	server.sin_family = AF_INET;
     	server.sin_port = htons( 8888 );
 

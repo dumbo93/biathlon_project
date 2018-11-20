@@ -5,5 +5,6 @@
 void init_create_file( struct tm stime);
 void file_name_set( int name_char);
 void save_data_val( void);
+void save_data_end( void);
 
-#endif
+#endif // SAVE_DATA_

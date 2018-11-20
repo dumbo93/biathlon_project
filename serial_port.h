@@ -7,8 +7,10 @@ int serial_init( void );
 
 void serial_close( void );
 
-void serial_read( void );
+int serial_read( void );
+
+void serial_new_data( void );
 
 //void serial_write( void );
 
-#endif 
+#endif // SERIAL_PORT_H_

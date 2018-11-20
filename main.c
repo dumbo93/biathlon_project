@@ -26,31 +26,58 @@ int main( int argc, char *argv[] ){
 	}
 	init_create_file(stime);
 	serial_init();
-	connected = WIFI_init();
+	//connected = WIFI_init();
 	
-	printf("main: %d\n", socket_desc);
+	//printf("main: %d\n", socket_desc);
 	while(1)
 	{
 		switch( central_state_get() ){
-			case read_serial:
-				serial_read();
+			case wait_for_data:
+				if (serial_read()){
+					central_state_set(new_data_received);
+				}
 				break;
 				
-			case got_value:
-				save_data_val( );
-				if (connected){
-					WIFI_send_data( );
-				}
-				central_state_set( read_serial );
+			case new_data_received:
+				serial_new_data();
+				save_data_val();
+				//if (connected){
+					//WIFI_send_data( );
+				//}
 				break;
+				
+			case hrm_data_received:
+				if (serial_read()){
+					if (current_value == '\n'){
+						central_state_set(wait_for_data);
+						save_data_end();
+					}
+					else {
+						save_data_val();
+					}
+				}				
+				break;
+				
+			case phy5_data_received:
+				if (serial_read()){
+					if (current_value == '\n'){
+						central_state_set(wait_for_data);
+						save_data_end();
+					}
+					else {
+						save_data_val();
+					}
+				}
+				break;
+			
 			default:
-				central_state_set( read_serial);
+				central_state_set( wait_for_data);
 				break;
 			}
 	}
 	
 	printf("Closing socket and serial port\n");
-	WIFI_close_socket( socket_desc );
+	//WIFI_close_socket( socket_desc );
 	serial_close();
 
 	return 0;
