@@ -6,7 +6,7 @@
 #include "wifi_client.h"
 #include "central_state.h"
 
-int socket_desc;
+
 
 int WIFI_init( void )
 {

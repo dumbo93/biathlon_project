@@ -55,7 +55,7 @@ void save_data_val( void)
 {
 	fp = fopen(save_data_name, "a");
 
-	fprintf(fp, "%d", current_value_int);
+	fprintf(fp, "%s", current_value_hex);
 
 	fclose(fp);
 }

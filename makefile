@@ -12,10 +12,10 @@ LDFLAGS = -g -pthread
 TARGET = main
 
 # objectfiles
-OBJECTS = main.o wifi_client.o save_data.o serial_port.o central_state.o
+OBJECTS = main.o save_data.o serial_port_hrm.o serial_port_phy5.o central_state.o
 
 # list of sources
-SOURCES = main.c wifi_client.c save_data.c serial_port.c central_state.c
+SOURCES = main.c save_data.c serial_port_hrm.c serial_port_phy5.c central_state.c
 # *.c **/*.c
 
 

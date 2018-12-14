@@ -7,26 +7,28 @@
 #include <termios.h>
 #include <errno.h>
 
-#include "serial_port.h"
+#include "serial_port_hrm.h"
 #include "central_state.h"
 #include "sensor_id.h"
 
 
 
 struct termios serial_settings;
-int fd = 0;
+int fd_hrm = 0;
 char received_val[8];
 
-int serial_init( void )
+
+
+int serial_hrm_init( void )
 {
 	printf("Hello from serial_init\n");
 	
-	if(!isatty(fd))
+	if(!isatty(fd_hrm))
 	{
 		printf("error: is not TTY\n");
 	}
 	
-	if(tcgetattr(fd, &serial_settings) < 0)
+	if(tcgetattr(fd_hrm, &serial_settings) < 0)
 	{
 		printf("error: current config\n");
 	}
@@ -56,65 +58,45 @@ int serial_init( void )
 	}
 	
 	// open port
-	fd = open("/dev/ttyACM0", O_RDWR | O_NOCTTY | O_NDELAY);
+	fd_hrm = open("/dev/ttyACM1", O_RDWR | O_NOCTTY | O_NDELAY);
 	// ttyUSB0: FT232 based USB2SERIAL converter
 	// 0_RDWR:  Read/Write access to serial port
 	// 0_NOCTTY: No terminal will control the process
 	// O_NDELAY: Use non-blocking I/O
 	
 	// error checking
-	if(fd < 0)
+	if(fd_hrm < 0)
 	{
 		printf("\n ERROR! in opening ttyACM0\n");
 	}
 	//printf("opend port\n");
 	
 	// apply configuration
-	if(tcsetattr(fd, TCSAFLUSH, &serial_settings) < 0)
+	if(tcsetattr(fd_hrm, TCSAFLUSH, &serial_settings) < 0)
 	{
 		printf("error: set attr\n");
 	}
 	printf("serial_init done\n");
-	return fd;
+	return fd_hrm;
 }
 
-
-void serial_close( void )
+void serial_hrm_close( void )
 {
 	printf("closing serial port\n");
-	close(fd);
+	close(fd_hrm);
 }
 
 
-int serial_read( void )
+int serial_hrm_read( void )
 {
-	if (read(fd, &current_value,1) > 0)
+	if (read(fd_hrm, &current_value,1) > 0)
 	{
 		ascii_to_hex();
 		ascii_to_int();
-		printf("Read value %s\n", &current_value);
+		//printf("Read value %s\n", current_value_hex);
 		return 1;
 	}
 	return 0;
 }
 
-void serial_new_data( void )
-{
-	switch (current_value_int){
-		case HRM_SENSOR:
-			printf("New data: HRM %d\n", current_value_int);
-			central_state_set(hrm_data_received);
-			break;
-		
-		case PHY5_SENSOR:
-			printf("New data: PHY5 %d\n", current_value_int);
-			central_state_set(phy5_data_received);
-			break;
-			
-		default:
-			printf("New data: error %d\n", current_value_int);
-			central_state_set(wait_for_data);
-			break;
-	}
-}
 
