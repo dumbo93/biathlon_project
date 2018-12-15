@@ -6,7 +6,7 @@ CC = gcc
 CFLAGS = -g -Wall
 
 # the linker flag
-LDFLAGS = -g -pthread
+LDFLAGS = -g -pthread -lrt
 
 # the build target executable
 TARGET = main

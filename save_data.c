@@ -31,7 +31,7 @@ void init_create_file(struct tm stime){
 	
 	fp = fopen(save_data_name, "w");
 
-	fprintf(fp, "Logging starter at time: ");
+	fprintf(fp, "Logging started at time: ");
 	fprintf(fp, "%d:%d", stime.tm_hour, stime.tm_min);
 	fprintf(fp, "\n\n");
 
@@ -59,6 +59,19 @@ void save_data_val( void)
 
 	fclose(fp);
 }
+
+
+void save_time_diff( long int time_diff_ms)
+{
+	
+	
+	fp = fopen(save_data_name, "a");
+
+	fprintf(fp, "%lx", time_diff_ms);
+
+	fclose(fp);
+}
+
 
 void save_data_end( void)
 {
