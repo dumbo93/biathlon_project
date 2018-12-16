@@ -63,14 +63,32 @@ void save_data_val( void)
 
 void save_time_diff( long int time_diff_ms)
 {
-	
+	if(time_diff_ms < 1048576){
+		if(time_diff_ms < 65536){
+			if(time_diff_ms < 4096){
+				save_add_zero();
+			}
+			save_add_zero();
+		}
+		save_add_zero();
+	}
 	
 	fp = fopen(save_data_name, "a");
-
+	
 	fprintf(fp, "%lx", time_diff_ms);
 
 	fclose(fp);
 }
+
+
+void save_add_zero( void ){
+	fp = fopen(save_data_name, "a");
+	
+	fprintf(fp, "0");
+
+	fclose(fp);
+}
+
 
 
 void save_data_end( void)

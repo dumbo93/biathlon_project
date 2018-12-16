@@ -67,7 +67,7 @@ int serial_hrm_init( void )
 	// error checking
 	if(fd_hrm < 0)
 	{
-		printf("\n ERROR! in opening ttyACM0\n");
+		printf("\n ERROR! in opening ttyACM1\n");
 	}
 	//printf("opend port\n");
 	
